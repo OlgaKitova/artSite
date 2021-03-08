@@ -15,7 +15,7 @@ const trigger = document.querySelectorAll(triggerSelector),
       item.style.display = 'none';
     });
 
-    modal.style.dispaly = 'block';
+    modal.style.display = 'block';
     document.body.style.overflow = 'hidden';
     document.body.style.marginRight = `${scroll}px`;
   });
@@ -23,9 +23,9 @@ const trigger = document.querySelectorAll(triggerSelector),
 
   close.addEventListener('click', () => {
    windows.forEach(item => {
-     item.style.dispay = 'none';
+     item.style.display = 'none';
    });
-   modal.style.dispaly = 'none';
+   modal.style.display = 'none';
     document.body.style.overflow = '';
     document.body.style.marginRight = `0px`; 
   });
@@ -42,9 +42,18 @@ const trigger = document.querySelectorAll(triggerSelector),
   });
  }
 function showModalByTime(selector, time) {
-setTimeout(function(){
-  document.querySelector(selector).style.dispay = 'block';
-  document.body.style.overflow = 'hidden';
+  setTimeout(function(){
+  let display;
+
+ document.querySelectorAll('[data-modal]').forEach(item => {
+   if(getComputedStyle(item).display != 'none') {
+      display = 'block';
+   }
+ });
+ if(!display) {
+    document.querySelector(selector).style.display = 'block';
+    document.body.style.overflow = 'hidden';
+ } 
 }, time);
 }
 function calcScroll() {
@@ -60,6 +69,9 @@ function calcScroll() {
 
   return scrollWidth;
 }
-bindModal();
+bindModal('.button-design', '.popup-design', '.popup-design .popup-close');
+bindModal('.button-consultation', '.popup-consultation', '.popup-consultation .popup-close');
+
+showModalByTime('.popup-consultation', 60000);
 };
 export default modals;
